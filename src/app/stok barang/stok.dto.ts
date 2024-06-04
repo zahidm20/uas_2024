@@ -1,4 +1,5 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsOptional } from 'class-validator';
+import { PageRequestDto } from 'src/utils/dto/page.dto';
 
 export class CreateStokBarangDto {
   @IsString()
@@ -32,4 +33,11 @@ export class UpdateStokBarangDto {
 
   @IsNumber()
   harga?: number;
+}
+
+
+export class findAllStokDto extends PageRequestDto {
+  @IsString()
+  @IsOptional()
+  nama_barang: string;
 }

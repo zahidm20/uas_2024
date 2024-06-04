@@ -1,4 +1,5 @@
-import { IsInt, IsNumber, Min } from 'class-validator';
+import { IsInt, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { PageRequestDto } from 'src/utils/dto/page.dto';
 
 export class CreateDetailPenjualanDto {
   @IsInt()
@@ -15,6 +16,11 @@ export class CreateDetailPenjualanDto {
 
   @IsNumber({ maxDecimalPlaces: 2 })
   subtotal: number;
+}
+export class findAllDetailPenjualanDto extends PageRequestDto {
+  @IsString()
+  @IsOptional()
+  penjualanID: string;
 }
 
 export class DetailPenjualanDto {

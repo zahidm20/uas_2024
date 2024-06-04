@@ -1,4 +1,5 @@
-import { IsString, IsInt, Min, IsPositive } from 'class-validator';
+import { IsString, IsInt, Min, IsPositive, IsOptional, Length } from 'class-validator';
+import { PageRequestDto } from 'src/utils/dto/page.dto';
 
 export class CreatePembelianDto {
   @IsString()
@@ -15,3 +16,24 @@ export class CreatePembelianDto {
   @Min(0)
   stok: number;
 }
+
+export class UpdatePelangganDto {
+  @IsString()
+  @IsOptional()
+  @Length(1, 255) nama?: string;
+
+  @IsString()
+  @IsOptional() deskripsi?: string;
+
+  @IsString()
+  @IsOptional()
+  @Length(1, 15)
+   harga?: number;
+}
+
+export class findAllPembelianDto extends PageRequestDto {
+  @IsString()
+  @IsOptional()
+  nama: string;
+}
+

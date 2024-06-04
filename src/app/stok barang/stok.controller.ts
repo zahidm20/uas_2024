@@ -8,15 +8,17 @@ import {
   Put,
 } from '@nestjs/common';
 import { StokBarangService } from './stok.service';
-import { CreateStokBarangDto, UpdateStokBarangDto } from './stok.dto';
+import { CreateStokBarangDto, UpdateStokBarangDto, findAllStokDto } from './stok.dto';
+import { Pagination } from 'src/utils/decorator/pagination.decorator';
 
 @Controller('stok-barang')
 export class StokBarangController {
   constructor(private readonly stokBarangService: StokBarangService) {}
 
-  @Get()
-  findAll() {
-    return this.stokBarangService.findAll();
+  @Get('list')
+  async findAll(@Pagination() query: findAllStokDto) {
+    // console.log(query)
+    return this.stokBarangService.findAll(query);
   }
 
   @Get(':id')

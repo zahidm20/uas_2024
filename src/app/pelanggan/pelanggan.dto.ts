@@ -5,43 +5,36 @@ import BaseResponse from 'src/utils/response/base.response';
 export class CreatePelangganDto {
   @IsString()
   @IsNotEmpty()
-  @Length(1, 255)
-  readonly namaPelanggan: string;
+  @Length(1, 255) namaPelanggan: string;
+
+  @IsString()
+  @IsNotEmpty() alamat: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly alamat: string;
+  @Length(1, 15) nomorTelepon: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Length(1, 15)
-  readonly nomorTelepon: string;
+  @IsOptional() create_at: Date;
 
-  @IsOptional()
-  readonly create_at: Date;
-
-  @IsOptional()
-  readonly update_at: Date;
+  @IsOptional() update_at: Date;
 }
 
 export class UpdatePelangganDto {
   @IsString()
   @IsOptional()
-  @Length(1, 255)
-  readonly namaPelanggan?: string;
+  @Length(1, 255) namaPelanggan?: string;
 
   @IsString()
-  @IsOptional()
-  readonly alamat?: string;
+  @IsOptional() alamat?: string;
 
   @IsString()
   @IsOptional()
   @Length(1, 15)
-  readonly nomorTelepon?: string;
+   nomorTelepon?: string;
 }
 
-export class findAllTugas extends PageRequestDto {
-  @IsOptional()
+export class findAllPelangganDto extends PageRequestDto {
   @IsString()
-  namaPelanggan: string;
+  @IsOptional()
+  pelangganID: string;
 }
