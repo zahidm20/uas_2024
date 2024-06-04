@@ -61,6 +61,15 @@ export class PenjualanService extends BaseResponse {
         pelangganID: true,
         created_at: true,
         updated_at: true,
+        created_by: {
+          id:true,
+          nama:true,
+        },
+        updated_by: {
+          id:true,
+          nama:true,
+          
+        }
       },
       skip,
       take: pageSize,

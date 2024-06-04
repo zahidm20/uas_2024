@@ -36,6 +36,15 @@ export class ProdukService extends BaseResponse {
         Stok: true,
         created_at: true,
         updated_at: true,
+        created_by: {
+          id:true,
+          nama:true,
+
+        },
+        updated_by: {
+          id:true,
+          nama: true
+        }
       },
       skip: limit,
       take: pageSize,

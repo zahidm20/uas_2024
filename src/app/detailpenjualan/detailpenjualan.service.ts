@@ -5,6 +5,7 @@ import { DetailPenjualan } from './detailpenjualan.entity';
 import {
   CreateDetailPenjualanDto,
   DetailPenjualanDto,
+  findAllDetailPenjualanDto,
 } from './detailpenjualan.dto';
 import { ResponsePagination } from 'src/interface';
 import BaseResponse from 'src/utils/response/base.response';
@@ -38,7 +39,7 @@ export class DetailPenjualanService extends BaseResponse {
     const result = await this.detailPenjualanRepository.save(detailPenjualan);
     return result;
   }
-  async getList(query: DetailPenjualanDto): Promise<ResponsePagination> {
+  async getList(query: findAllDetailPenjualanDto): Promise<ResponsePagination> {
     const { page, pageSize, limit, penjualanID } = query;
 
     const filterQuery: any = {};
@@ -60,8 +61,16 @@ export class DetailPenjualanService extends BaseResponse {
         produkID: true,
         jumlahProduk: true,
         subtotal: true,
-        updated_at: true,
         created_at: true,
+        updated_at: true,
+        created_by: {
+          id: true, // pilih field  yang akan ditampilkan dari tabel user
+          nama: true,
+        },
+        updated_by: {
+          id: true, // pilih field yang akan ditampilkan dari tabel user
+          nama: true,
+        },
       },
       skip: limit,
       take: pageSize,

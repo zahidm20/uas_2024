@@ -1,18 +1,56 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Barang } from './pendataan.entity';
-import { CreateBarangDto } from './pendataan.dto';
+import { CreateBarangDto, findAllPendataanDto } from './pendataan.dto';
+import BaseResponse from 'src/utils/response/base.response';
+import { ResponsePagination } from 'src/interface';
 
 @Injectable()
-export class PendataanBarangService {
+export class PendataanBarangService extends BaseResponse {
   constructor(
     @InjectRepository(Barang)
     private barangRepository: Repository<Barang>,
-  ) {}
+  ) {
+    super()
+  }
 
-  findAll(): Promise<Barang[]> {
-    return this.barangRepository.find();
+  async findAll(query: findAllPendataanDto): Promise<ResponsePagination> {
+    const { page, pageSize, limit, jenis} = query;
+
+    const filterQuery: any = {};
+    if (jenis) {
+      filterQuery.jenis = Like(`%${jenis}%`);
+    }
+
+    const total = await this.barangRepository.count({ where: filterQuery });
+
+    console.log('Qwery', filterQuery);
+
+    const result = await this.barangRepository.find({
+      where: filterQuery,
+      select: {
+        jenis: true,
+        jumlah: true,
+        kondisi:true,
+        nama:true,
+
+        created_at: true,
+        updated_at: true,
+        created_by: {
+          id: true,
+          nama: true,
+        },
+        updated_by: {
+          id: true,
+          nama: true
+        }
+      },
+      skip: limit,
+      take: pageSize,
+    });
+
+    return this._pagination('Okeh', result, total, page, pageSize);
   }
 
   findOne(id: string): Promise<Barang> {

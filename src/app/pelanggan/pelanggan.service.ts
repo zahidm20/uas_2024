@@ -5,7 +5,7 @@ import { Pelanggan } from './pelanggan.entity';
 import {
   CreatePelangganDto,
   UpdatePelangganDto,
-  findAllTugas,
+  findAllPelangganDto,
 } from './pelanggan.dto';
 import { ResponsePagination, ResponseSuccess } from 'src/interface';
 import BaseResponse from 'src/utils/response/base.response';
@@ -65,12 +65,12 @@ export class PelangganService extends BaseResponse {
     }
   }
 
-  async getList(query: findAllTugas): Promise<ResponsePagination> {
-    const { page, pageSize, limit, namaPelanggan } = query;
+  async getList(query: findAllPelangganDto): Promise<ResponsePagination> {
+    const { page, pageSize, limit, pelangganID} = query;
 
     const filterQuery: any = {};
-    if (namaPelanggan) {
-      filterQuery.namaPelanggan = Like(`%${namaPelanggan}%`);
+    if (pelangganID) {
+      filterQuery.pelangganID = Like(`%${pelangganID}%`);
     }
 
     const total = await this.pelangganRepository.count({ where: filterQuery });
@@ -86,6 +86,14 @@ export class PelangganService extends BaseResponse {
         nomorTelepon: true,
         create_at: true,
         updated_at: true,
+        created_by: {
+          id: true,
+          nama: true
+        },
+        updated_by: {
+          id: true,
+          nama: true
+        }
       },
       skip: limit,
       take: pageSize,

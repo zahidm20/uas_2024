@@ -8,7 +8,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { PendataanBarangService } from './pendataan.service';
-import { CreateBarangDto } from './pendataan.dto';
+import { CreateBarangDto, findAllPendataanDto } from './pendataan.dto';
+import { Pagination } from 'src/utils/decorator/pagination.decorator';
 
 @Controller('barang')
 export class PendataanBarangController {
@@ -16,9 +17,10 @@ export class PendataanBarangController {
     private readonly pendataanBarangService: PendataanBarangService,
   ) {}
 
-  @Get()
-  getAllBarang() {
-    return this.pendataanBarangService.findAll();
+  @Get('list')
+  async findAll(@Pagination() query: findAllPendataanDto) {
+    // console.log(query)
+    return this.pendataanBarangService.findAll(query);
   }
 
   @Get(':id')
@@ -44,3 +46,5 @@ export class PendataanBarangController {
     return this.pendataanBarangService.remove(id);
   }
 }
+
+

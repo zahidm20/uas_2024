@@ -1,4 +1,5 @@
-import { IsString, IsInt, Min } from 'class-validator';
+import { IsString, IsInt, Min, IsOptional } from 'class-validator';
+import { PageRequestDto } from 'src/utils/dto/page.dto';
 
 export class CreateBarangDto {
   @IsString()
@@ -13,4 +14,11 @@ export class CreateBarangDto {
 
   @IsString()
   kondisi: string;
+}
+
+
+export class findAllPendataanDto extends PageRequestDto {
+  @IsString()
+  @IsOptional()
+  jenis: string;
 }
